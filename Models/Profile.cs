@@ -1,4 +1,4 @@
-﻿namespace Progression.Models
+﻿    namespace Progression.Models
 {
     public class Profile
     {
