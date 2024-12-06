@@ -23,7 +23,7 @@ public class QuizController : ControllerBase
         try
         {
             var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "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");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "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");
 
             var prompt = $@"
 Create a multiple-choice quiz on the topic '{request.Topic}' with {request.NumberOfQuestions} questions.
@@ -50,12 +50,16 @@ Return the result as a JSON array. Example format:
             var content = new
             {
                 model = "gpt-3.5-turbo",
-                prompt = prompt,
+                messages = new[]
+            {
+                new { role = "system", content = "You are a helpful assistant that creates multiple-choice quizzes." },
+                new { role = "user", content = prompt }
+            },
                 max_tokens = 500,
                 temperature = 0.7
             };
 
-            var response = await client.PostAsync("https://api.openai.com/v1/completions",
+            var response = await client.PostAsync("https://api.openai.com/v1/chat/completions",
                 new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json"));
 
             var responseBody = await response.Content.ReadAsStringAsync();
