@@ -61,7 +61,12 @@ Return the result as a JSON array. Example format:
             var content = new
             {
                 model = "gpt-3.5-turbo",
-                messages = messages,
+
+                messages = new[]
+            {
+                new { role = "system", content = "You are a helpful assistant that creates multiple-choice quizzes." },
+                new { role = "user", content = prompt }
+            },
                 max_tokens = 500,
                 temperature = 0.7
             };
