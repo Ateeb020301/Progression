@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Progression.Data;
+using Progression.Dtos.Profile;
 using Progression.Interfaces;
 using Progression.Mappers;
 
@@ -24,7 +25,7 @@ namespace Progression.Controllers
             var profiles = await _profileRepository.GetAllAsync();
             var stockDto = profiles.Select(s => s.ToProfileDto());
 
-            return  Ok(profiles);
+            return  Ok(stockDto);
         }
 
         [HttpGet("{id}")]
@@ -40,18 +41,22 @@ namespace Progression.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Dtos.CreateProfileRequestDto profileDto)
+        public async Task<IActionResult> Create([FromBody] CreateProfileRequestDto profileDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var profileModel = profileDto.ToProfileFromCreateDto();
             await _profileRepository.CreateAsync(profileModel);
 
             return CreatedAtAction(nameof(GetById), new { id = profileModel.Id }, profileModel.ToProfileDto());
-
         }
+
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] Dtos.UpdateProfileRequestDto updateDto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateProfileRequestDto updateDto)
         {
             var profileModel = await _profileRepository.UpdatedAsync(id, updateDto);
             if (profileModel == null)

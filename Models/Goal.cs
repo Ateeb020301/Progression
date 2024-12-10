@@ -8,22 +8,7 @@
         public List<Milestone> MilestoneList { get; set; } = new List<Milestone>();
 
         //En til mange relasjon mellom Goal og profil
+        public int ProfileId { get; set; } // Add this property
         public Profile Profile { get; set; }
-
-        //public List<Milestone> GenerateMilestone()
-        //{
-        //    // Generate Milestones logic
-        //    return new List<Milestone>();
-        //}
-
-        //public void CreateMilestone(Milestone milestone)
-        //{
-        //    MilestoneList.Add(milestone);
-        //}
-
-        //public void GenerateQuiz()
-        //{
-        //    // Generate Quiz logic
-        //}
     }
 }

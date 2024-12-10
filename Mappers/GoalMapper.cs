@@ -1,0 +1,66 @@
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Progression.Dtos;
+using Progression.Dtos.Goal;
+using Progression.Dtos.Milestone;
+using Progression.Dtos.Profile;
+using Progression.Dtos.Skill;
+using Progression.Models;
+namespace Progression.Mappers
+{
+    public static class GoalMapper
+    {
+
+        public static GaolIncludeProfileIdDto ToGoalNoProfileDto(this Goal goalModel)
+        {
+            return new GaolIncludeProfileIdDto
+            {
+                Id = goalModel.Id,
+                Name = goalModel.Name,
+                Difficulty = goalModel.Difficulty,
+                ProfileId = goalModel.ProfileId,
+                //Profile = goalModel.Profile.ToProfileNoListsDto(),
+                MilestoneList = goalModel.MilestoneList?.Select(s => new MilestoneDto
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                    Description = s.Description,
+                    Status = s.Status
+                }).ToList()
+            };
+        }
+        public static GoalDto ToGoalDto(this Goal goalModel)
+        {
+            return new GoalDto
+            {
+                Id = goalModel.Id,
+                Name = goalModel.Name,
+                Difficulty = goalModel.Difficulty,
+                ProfileId = goalModel.ProfileId,
+                Profile = goalModel.Profile.ToProfileNoListsDto(),
+                MilestoneList = goalModel.MilestoneList?.Select(s => new MilestoneDto
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                    Description = s.Description,
+                    Status = s.Status
+                }).ToList()
+            };
+        }
+
+        public static Goal ToGoalFromCreateDto(this CreateGoalRequestDto goalModel)
+        {
+            return new Goal
+            {
+                Name = goalModel.Name,
+                Difficulty = goalModel.Difficulty,
+                MilestoneList = goalModel.MilestoneList?.Select(s => new Milestone
+                {
+                    Title = s.Title,
+                    Description = s.Description,
+                    Status = false,
+                }).ToList()
+            };
+        }
+
+    }
+}

@@ -8,6 +8,7 @@
         public int Answer { get; set; }
 
         //Mange til en relasjon til Quiz
+        public int QuizId { get; set; } // Add this property
         public Quiz Quiz { get; set; }
     }  
 }

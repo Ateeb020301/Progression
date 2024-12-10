@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Progression.Data;
-using Progression.Dtos;
+using Progression.Dtos.Profile;
 using Progression.Interfaces;
 using Progression.Models;
 
@@ -16,12 +16,13 @@ namespace Progression.Repository
 
         public async Task<List<Profile>> GetAllAsync()
         {
-            return await _context.Profile.ToListAsync();
+            return await _context.Profile.Include(s => s.SkillList).Include(g => g.GoalList).ToListAsync();
         }
 
         public async Task<Profile> GetByIdAsync(int id)
         {
-            return await _context.Profile.FindAsync(id);
+            //return await _context.Profile.FindAsync(id);
+            return await _context.Profile.Include(s => s.SkillList).Include(s => s.GoalList).FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<Profile> CreateAsync(Profile profileModel)
@@ -50,8 +51,9 @@ namespace Progression.Repository
             }
             existingProfile.Name = profileDto.Name;
             existingProfile.TotalPoints = profileDto.TotalPoints;
-            //existingProfile.SkillList = profileDto.SkillList;
-            //existingProfile.GoalList = profileDto.GoalList;
+            existingProfile.JobTitle = profileDto.JobTitle;
+            existingProfile.SkillList = profileDto.SkillList;
+            existingProfile.GoalList = profileDto.GoalList;
 
             await _context.SaveChangesAsync();
 

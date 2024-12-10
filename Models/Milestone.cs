@@ -7,25 +7,16 @@
         public string Description { get; set; }
         public bool Status { get; set; }
 
+ 
+
 
         //En til mange relasjon til milestone
+        public int GoalId { get; set; } // Add this property
         public Goal Goal { get; set; }
 
 
-        //public Quiz GenerateQuiz()
-        //{
-        //    // Generate Quiz logic
-        //    return new Quiz();
-        //}
+        //En til mange relasjon til Quiz
+        public List<Quiz> QuizList { get; set; } = new List<Quiz>();
 
-        //public void CRUD()
-        //{
-        //    // CRUD operations
-        //}
-
-        //public void SoftDeleteMilestone()
-        //{
-        //    Status = false;
-        //}
     }
 }

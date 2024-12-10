@@ -10,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(); // Enables attribute routing
 builder.Services.AddEndpointsApiExplorer(); // Adds support for API documentation
 builder.Services.AddSwaggerGen(); // Adds Swagger for API documentation
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient(); // Adds third party services
+
 
 // Add the database context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -18,6 +19,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Register repository as a scoped service
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<IGoalRepository, GoalRepository>();
+builder.Services.AddScoped<IQuizRepository, QuizRepository>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<IMilestoneRepository, MilestoneRepository>();
 
 builder.Services.AddCors(options =>
 {
