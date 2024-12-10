@@ -3,6 +3,8 @@ using Progression.Dtos;
 using Progression.Dtos.Goal;
 using Progression.Dtos.Milestone;
 using Progression.Dtos.Profile;
+using Progression.Dtos.Question;
+using Progression.Dtos.Quiz;
 using Progression.Dtos.Skill;
 using Progression.Models;
 namespace Progression.Mappers
@@ -24,7 +26,20 @@ namespace Progression.Mappers
                     Id = s.Id,
                     Title = s.Title,
                     Description = s.Description,
-                    Status = s.Status
+                    Status = s.Status,
+                    QuizList = s.QuizList?.Select(s => new QuizDto
+                    {
+                        Id = s.Id,
+                        Score = s.Score,
+                        Status = s.Status,
+                        Questions = s.Questions?.Select(q => new QuestionDto
+                        {
+                            Id = q.Id,
+                            Content = q.Content,
+                            Options = q.Options,
+                            Answer = q.Answer
+                        }).ToList()
+                    }).ToList()
                 }).ToList()
             };
         }

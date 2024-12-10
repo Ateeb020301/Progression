@@ -17,14 +17,14 @@ namespace Progression.Repository
         public async Task<List<Goal>> GetAllAsync()
         {
             return await _context.Goal
-                .Include(goal => goal.Profile).Include(s => s.MilestoneList) // Include the Profile entity
+                .Include(goal => goal.Profile).Include(s => s.MilestoneList).ThenInclude(p => p.QuizList)
                 .ToListAsync();
         }
 
         public async Task<Goal> GetByIdAsync(int id)
         {
             //return await _context.Goal.FindAsync(id);
-            return await _context.Goal.Include(s => s.MilestoneList).FirstOrDefaultAsync(s => s.Id == id);
+            return await _context.Goal.Include(s => s.MilestoneList).ThenInclude(p => p.QuizList).ThenInclude(c => c.Questions).FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<Goal> CreateAsync(Goal goalModel)
