@@ -17,15 +17,25 @@ public class QuizController : ControllerBase
     }
 
     [HttpPost("generate")]
-    //henter quiz fra OpenAi APi i JSON format
+    // Generates a quiz using the OpenAI API in JSON format
     public async Task<IActionResult> GenerateQuiz([FromBody] QuizRequest request)
     {
         try
         {
             var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "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");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "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");
 
-            var prompt = $@"
+            var messages = new[]
+            {
+                new
+                {
+                    role = "system",
+                    content = "You are a helpful assistant that generates quizzes in JSON format."
+                },
+                new
+                {
+                    role = "user",
+                    content = $@"
 Create a multiple-choice quiz on the topic '{request.Topic}' with {request.NumberOfQuestions} questions.
 Each question should have:
 1. The question text.
@@ -44,22 +54,23 @@ Return the result as a JSON array. Example format:
         }},
         ""correctAnswer"": ""C""
     }}
-]
-";
+]"
+                }
+            };
 
             var content = new
             {
                 model = "gpt-3.5-turbo",
-                prompt = prompt,
+                messages = messages,
                 max_tokens = 500,
                 temperature = 0.7
             };
 
-            var response = await client.PostAsync("https://api.openai.com/v1/completions",
+            var response = await client.PostAsync("https://api.openai.com/v1/chat/completions",
                 new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json"));
 
             var responseBody = await response.Content.ReadAsStringAsync();
-            //får error mld fra OpenAi om hva som er feil
+
             if (!response.IsSuccessStatusCode)
             {
                 return StatusCode((int)response.StatusCode, new
@@ -80,7 +91,6 @@ Return the result as a JSON array. Example format:
             });
         }
     }
-
 
     public class QuizRequest
     {

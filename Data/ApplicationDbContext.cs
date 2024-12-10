@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Progression.Models;
 
 namespace Progression.Data
 {
@@ -17,6 +18,14 @@ namespace Progression.Data
             optionsBuilder.UseNpgsql(_Connect);
             optionsBuilder.LogTo(message => Debug.WriteLine(message)); //see the sql EF using in the console
         }
-        public DbSet<Models.Profile> Profile { get; set; }
+        public DbSet<Profile> Profile { get; set; }
+        public DbSet<Skill> Skill { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Quiz> Quiz { get; set; }
+        public DbSet<Question> Question { get; set; }
+        public DbSet<Milestone> Milestone { get; set; }
+        public DbSet<Goal> Goal { get; set; }
+
+
     }
 }

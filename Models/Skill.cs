@@ -5,12 +5,9 @@
         public int Id { get; set; }
         public string Name { get; set; }
 
+        //En til mange relsasjon mot Profile
+        public int ProfileId { get; set; } // Add this property
         public Profile Profile { get; set; }
 
-        //public void RegisterSkill(string name, List<Skill> skills, Goal goal)
-        //{
-        //    Name = name;
-        //    skills.Add(this);
-        //}
     }
 }
