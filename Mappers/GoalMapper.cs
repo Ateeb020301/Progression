@@ -21,6 +21,19 @@ namespace Progression.Mappers
                 Difficulty = goalModel.Difficulty,
                 ProfileId = goalModel.ProfileId,
                 //Profile = goalModel.Profile.ToProfileNoListsDto(),
+                QuizList = goalModel.QuizList?.Select(s => new QuizDto
+                {
+                    Id = s.Id,
+                    Score = s.Score,
+                    Status = s.Status,
+                    Questions = s.Questions?.Select(q => new QuestionDto
+                    {
+                        Id = q.Id,
+                        Content = q.Content,
+                        Options = q.Options,
+                        Answer = q.Answer
+                    }).ToList()
+                }).ToList(),
                 MilestoneList = goalModel.MilestoneList?.Select(s => new MilestoneDto
                 {
                     Id = s.Id,
@@ -68,12 +81,12 @@ namespace Progression.Mappers
             {
                 Name = goalModel.Name,
                 Difficulty = goalModel.Difficulty,
-                MilestoneList = goalModel.MilestoneList?.Select(s => new Milestone
-                {
-                    Title = s.Title,
-                    Description = s.Description,
-                    Status = false,
-                }).ToList()
+                //MilestoneList = goalModel.MilestoneList?.Select(s => new Milestone
+                //{
+                //    Title = s.Title,
+                //    Description = s.Description,
+                //    Status = false,
+                //}).ToList()
             };
         }
 

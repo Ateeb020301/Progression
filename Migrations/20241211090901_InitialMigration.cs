@@ -112,11 +112,18 @@ namespace Progression.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Score = table.Column<int>(type: "integer", nullable: false),
                     Status = table.Column<bool>(type: "boolean", nullable: false),
+                    GoalId = table.Column<int>(type: "integer", nullable: false),
                     MilestoneId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Quiz", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Quiz_Goal_GoalId",
+                        column: x => x.GoalId,
+                        principalTable: "Goal",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Quiz_Milestone_MilestoneId",
                         column: x => x.MilestoneId,
@@ -134,11 +141,17 @@ namespace Progression.Migrations
                     Content = table.Column<string>(type: "text", nullable: false),
                     Options = table.Column<List<string>>(type: "text[]", nullable: false),
                     Answer = table.Column<int>(type: "integer", nullable: false),
-                    QuizId = table.Column<int>(type: "integer", nullable: false)
+                    QuizId = table.Column<int>(type: "integer", nullable: false),
+                    GoalId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Question", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Question_Goal_GoalId",
+                        column: x => x.GoalId,
+                        principalTable: "Goal",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Question_Quiz_QuizId",
                         column: x => x.QuizId,
@@ -158,9 +171,19 @@ namespace Progression.Migrations
                 column: "GoalId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Question_GoalId",
+                table: "Question",
+                column: "GoalId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Question_QuizId",
                 table: "Question",
                 column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Quiz_GoalId",
+                table: "Quiz",
+                column: "GoalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Quiz_MilestoneId",

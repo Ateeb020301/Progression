@@ -42,6 +42,7 @@ namespace Progression.Mappers
                 }).ToList()
             };
         }
+        
 
         // Mapping from CreateProfileRequestDto to Profile entity
         public static Profile ToProfileFromCreateDto(this CreateProfileRequestDto profileDto)

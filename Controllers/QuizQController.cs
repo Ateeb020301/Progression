@@ -101,6 +101,27 @@ namespace Progression.Controllers
             return CreatedAtAction(nameof(GetById), new { id = quiz.Id }, quiz.ToQuizDto());
         }
 
+        [HttpPost("goal/{goalId}")]
+        public async Task<IActionResult> AddQuizToGoal([FromRoute] int goalId, [FromBody] CreateQuizRequestDto quizDto)
+        {
+            // Find the goal
+            var goal = await _context.Goal.FindAsync(goalId);
+            if (goal == null)
+            {
+                return NotFound(new { Message = "Milestone not found." });
+            }
+
+            // Map the goal DTO to the Quiz model
+            var quiz = quizDto.ToQuizFromCreateDto();
+
+            // Associate the quiz with the milestone
+            quiz.Goal = goal;
+
+            // Save the skill
+            await _quizRepository.CreateAsync(quiz);
+            return CreatedAtAction(nameof(GetById), new { id = quiz.Id }, quiz.ToQuizDto());
+        }
+
 
     }
 }
