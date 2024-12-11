@@ -16,7 +16,7 @@
 
 
         //En til mange relasjon til Quiz
-        public List<Quiz> QuizList { get; set; } = new List<Quiz>();
+        public List<Quiz>? QuizList { get; set; } = new List<Quiz>();
 
     }
 }

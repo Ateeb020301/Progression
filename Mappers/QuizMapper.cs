@@ -12,6 +12,8 @@ namespace Progression.Mappers
             Id = quizModel.Id,
             Score = quizModel.Score,
             Status = quizModel.Status,
+            MilestoneId = quizModel.MilestoneId,
+            GoalId = quizModel.GoalId,
             Questions = quizModel.Questions?.Select(q => new QuestionDto
             {
                 Id = q.Id,

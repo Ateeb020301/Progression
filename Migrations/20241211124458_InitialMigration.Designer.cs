@@ -13,7 +13,7 @@ using Progression.Data;
 namespace Progression.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241211090901_InitialMigration")]
+    [Migration("20241211124458_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -119,9 +119,6 @@ namespace Progression.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("GoalId")
-                        .HasColumnType("integer");
-
                     b.Property<List<string>>("Options")
                         .IsRequired()
                         .HasColumnType("text[]");
@@ -130,8 +127,6 @@ namespace Progression.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GoalId");
 
                     b.HasIndex("QuizId");
 
@@ -146,10 +141,10 @@ namespace Progression.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("GoalId")
+                    b.Property<int?>("GoalId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("MilestoneId")
+                    b.Property<int?>("MilestoneId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Score")
@@ -234,10 +229,6 @@ namespace Progression.Migrations
 
             modelBuilder.Entity("Progression.Models.Question", b =>
                 {
-                    b.HasOne("Progression.Models.Goal", null)
-                        .WithMany("Questions")
-                        .HasForeignKey("GoalId");
-
                     b.HasOne("Progression.Models.Quiz", "Quiz")
                         .WithMany("Questions")
                         .HasForeignKey("QuizId")
@@ -250,16 +241,12 @@ namespace Progression.Migrations
             modelBuilder.Entity("Progression.Models.Quiz", b =>
                 {
                     b.HasOne("Progression.Models.Goal", "Goal")
-                        .WithMany()
-                        .HasForeignKey("GoalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("QuizList")
+                        .HasForeignKey("GoalId");
 
                     b.HasOne("Progression.Models.Milestone", "Milestone")
                         .WithMany("QuizList")
-                        .HasForeignKey("MilestoneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MilestoneId");
 
                     b.Navigation("Goal");
 
@@ -281,7 +268,7 @@ namespace Progression.Migrations
                 {
                     b.Navigation("MilestoneList");
 
-                    b.Navigation("Questions");
+                    b.Navigation("QuizList");
                 });
 
             modelBuilder.Entity("Progression.Models.Milestone", b =>

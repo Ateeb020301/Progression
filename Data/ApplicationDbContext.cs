@@ -17,6 +17,7 @@ namespace Progression.Data
         {
             optionsBuilder.UseNpgsql(_Connect);
             optionsBuilder.LogTo(message => Debug.WriteLine(message)); //see the sql EF using in the console
+
         }
         public DbSet<Profile> Profile { get; set; }
         public DbSet<Skill> Skill { get; set; }
@@ -26,6 +27,20 @@ namespace Progression.Data
         public DbSet<Milestone> Milestone { get; set; }
         public DbSet<Goal> Goal { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Quiz>()
+                .HasOne(q => q.Milestone)
+                .WithMany(m => m.QuizList)
+                .HasForeignKey(q => q.MilestoneId)
+                .IsRequired(false); // Explicitly make the relationship optional
+
+            modelBuilder.Entity<Quiz>()
+                .HasOne(q => q.Goal)
+                .WithMany(g => g.QuizList)
+                .HasForeignKey(q => q.GoalId)
+                .IsRequired(false); // Also optional
+        }
 
     }
 }
