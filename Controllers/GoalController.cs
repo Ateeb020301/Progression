@@ -18,6 +18,7 @@ namespace Progression.Controllers
         private readonly IGoalRepository _goalRepository;
         public GoalController(ApplicationDbContext context, IGoalRepository goalRepository)
         {
+
             _goalRepository = goalRepository;
             _context = context;
         }
@@ -85,7 +86,7 @@ namespace Progression.Controllers
                 return NotFound();
             }
 
-            return Ok(goalModel.ToGoalDto());
+            return Ok(goalModel.ToGoalUpdateDto());
         }
 
 

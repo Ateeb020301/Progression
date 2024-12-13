@@ -3,19 +3,26 @@ using Progression.Data;
 using Progression.Interfaces;
 using Progression.Repository;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add the database context
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DevConnection")));
+
+builder.Services.AddAuthorization(); // Identity api endpoints
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+
 
 // Add services to the container.
 builder.Services.AddControllers(); // Enables attribute routing
 builder.Services.AddEndpointsApiExplorer(); // Adds support for API documentation
 builder.Services.AddSwaggerGen(); // Adds Swagger for API documentation
 builder.Services.AddHttpClient(); // Adds third party services
-
-
-// Add the database context
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DevConnection")));
 
 // Register repository as a scoped service
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
@@ -37,6 +44,20 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 app.UseCors("AllowFrontend");
+app.MapIdentityApi<ApplicationUser>();
+
+app.MapPost("/logout", async (SignInManager<ApplicationUser> signInManager) =>
+{
+    await signInManager.SignOutAsync();
+    return Results.Ok();
+}).RequireAuthorization();
+
+app.MapPost("/pingauth", (ClaimsPrincipal user) =>
+{
+    var email = user.FindFirstValue(ClaimTypes.Email);
+    return Results.Json(new { Email = email });
+}).RequireAuthorization();
+
 // Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
@@ -52,6 +73,8 @@ app.UseSwaggerUI(c =>
 });
 
 app.UseStaticFiles(); // Serve static files if needed
+
+
 
 app.UseRouting(); // Enable routing middleware
 

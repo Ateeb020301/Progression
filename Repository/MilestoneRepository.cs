@@ -53,7 +53,7 @@ namespace Progression.Repository
             }
             existingMilestone.Title = milestoneDto.Title;
             existingMilestone.Description = milestoneDto.Description;
-            //existingMilestone.Status = milestoneDto.Status;
+            existingMilestone.Status = milestoneDto.Status;
 
             await _context.SaveChangesAsync();
 

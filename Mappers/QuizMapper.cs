@@ -23,8 +23,16 @@ namespace Progression.Mappers
             }).ToList()
         };
     }
+    public static UpdateQuizRequestDto ToQuizUpdateDto(this Quiz quizModel)
+    {
+        return new UpdateQuizRequestDto
+        {
+            Score = quizModel.Score,
+            Status = quizModel.Status,
+        };
+    }
 
-    public static Quiz ToQuizFromCreateDto(this CreateQuizRequestDto quizDto)
+        public static Quiz ToQuizFromCreateDto(this CreateQuizRequestDto quizDto)
     {
         return new Quiz
         {

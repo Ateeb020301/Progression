@@ -19,6 +19,15 @@ namespace Progression.Mappers
             };
         }
 
+        public static UpdateProfileRequestDto ToProfileUpdateDto(this Profile profileModel)
+        {
+            return new UpdateProfileRequestDto
+            {
+                Name = profileModel.Name,
+                TotalPoints = profileModel.TotalPoints,
+                JobTitle = profileModel.JobTitle,
+            };
+        }
         public static ProfileDto ToProfileDto(this Profile profileModel)
         {
             return new ProfileDto

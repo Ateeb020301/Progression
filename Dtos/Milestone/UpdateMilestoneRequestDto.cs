@@ -6,6 +6,6 @@ namespace Progression.Dtos.Milestone
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public bool status { get; set; }
+        public bool Status { get; set; }
     }
 }

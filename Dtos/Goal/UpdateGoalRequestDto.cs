@@ -8,5 +8,5 @@ using Progression.Models;
     {
         public string Name { get; set; }
         public int Difficulty { get; set; }
-        public List<MilestoneDto> MilestoneList { get; set; } = new List<MilestoneDto>();
+        //public List<MilestoneDto> MilestoneList { get; set; } = new List<MilestoneDto>();
     }

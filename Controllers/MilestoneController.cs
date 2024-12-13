@@ -68,7 +68,7 @@ namespace Progression.Controllers
                 return NotFound();
             }
 
-            return Ok(milestoneModel.ToMilestoneDto());
+            return Ok(milestoneModel.ToMilestoneUpdateDto());
         }
 
 

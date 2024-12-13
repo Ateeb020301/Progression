@@ -52,8 +52,8 @@ namespace Progression.Repository
             existingProfile.Name = profileDto.Name;
             existingProfile.TotalPoints = profileDto.TotalPoints;
             existingProfile.JobTitle = profileDto.JobTitle;
-            existingProfile.SkillList = profileDto.SkillList;
-            existingProfile.GoalList = profileDto.GoalList;
+            //existingProfile.SkillList = profileDto.SkillList;
+            //existingProfile.GoalList = profileDto.GoalList;
 
             await _context.SaveChangesAsync();
 

@@ -30,6 +30,15 @@ namespace Progression.Mappers
                 }).ToList()
             };
         }
+        public static UpdateMilestoneRequestDto ToMilestoneUpdateDto(this Milestone milestoneModel)
+        {
+            return new UpdateMilestoneRequestDto
+            {
+                Title = milestoneModel.Title,
+                Description = milestoneModel.Description,
+                Status = milestoneModel.Status,
+            };
+        }
 
         public static Milestone ToMilestoneFromCreateDto(this CreateMilestoneRequestDto milestoneDto)
         {
@@ -37,7 +46,7 @@ namespace Progression.Mappers
             {
                 Title = milestoneDto.Title,
                 Description = milestoneDto.Description,
-                Status = milestoneDto.status
+                Status = milestoneDto.Status
 
             };
         }

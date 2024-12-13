@@ -53,7 +53,8 @@ namespace Progression.Repository
                 return null;
             }
             existingQuiz.Score = quizDto.Score;
-            existingQuiz.Questions = quizDto.Questions;
+            existingQuiz.Status = quizDto.Status;
+            //existingQuiz.Questions = quizDto.Questions;
             await _context.SaveChangesAsync();
 
             return existingQuiz;

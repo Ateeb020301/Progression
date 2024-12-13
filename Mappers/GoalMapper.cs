@@ -75,6 +75,15 @@ namespace Progression.Mappers
             };
         }
 
+        public static UpdateGoalRequestDto ToGoalUpdateDto(this Goal goalModel)
+        {
+            return new UpdateGoalRequestDto
+            {
+                Name = goalModel.Name,
+                Difficulty = goalModel.Difficulty,
+            };
+        }
+
         public static Goal ToGoalFromCreateDto(this CreateGoalRequestDto goalModel)
         {
             return new Goal

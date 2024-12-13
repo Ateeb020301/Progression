@@ -64,7 +64,7 @@ namespace Progression.Controllers
                 return NotFound();
             }
 
-            return Ok(profileModel.ToProfileDto());
+            return Ok(profileModel.ToProfileUpdateDto());
         }
 
 

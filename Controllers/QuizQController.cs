@@ -63,7 +63,7 @@ namespace Progression.Controllers
                 return NotFound();
             }
 
-            return Ok(quizModel.ToQuizDto());
+            return Ok(quizModel.ToQuizUpdateDto());
         }
 
 
