@@ -29,8 +29,8 @@ public class QuizController : ControllerBase
                             Create a multiple-choice quiz on the topic '{request.Topic}' with {request.NumberOfQuestions} questions.
                             Each question should have:
                             1. The question text.
-                            2. Four answer choices labeled A, B, C, and D.
-                            3. The correct answer.
+                            2. Four answer choices labeled A, B, C, and D, where A= 0 in the array etc.
+                            3. The correct answer. The index of the correct answer in the array
 
                             Return the result as a JSON array. Example format:
                             [
@@ -42,7 +42,7 @@ public class QuizController : ControllerBase
                                         ""C: Paris"",
                                         ""D: Rome""
                                     ],
-                                    ""answer"": ""C""
+                                    ""answer"": 2
                                 }}
                             ]
                             ";
