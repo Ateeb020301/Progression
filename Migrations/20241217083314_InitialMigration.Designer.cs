@@ -13,7 +13,7 @@ using Progression.Data;
 namespace Progression.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241211124458_InitialMigration")]
+    [Migration("20241217083314_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -196,7 +196,7 @@ namespace Progression.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text");
 

@@ -19,8 +19,8 @@ namespace Progression.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IMilestoneRepository _milestoneRepository;
-        private readonly IGoalRepository _goalRepository;
-        public MileStoneController(ApplicationDbContext context, IMilestoneRepository milestoneRepository, IGoalRepository goalRepository)
+        private readonly IUserRepository _goalRepository;
+        public MileStoneController(ApplicationDbContext context, IMilestoneRepository milestoneRepository, IUserRepository goalRepository)
         {
             _milestoneRepository = milestoneRepository;
             _context = context;

@@ -1,17 +1,15 @@
-﻿using Progression.Dtos.Profile;
+﻿using Progression.Dtos.User;
 using Progression.Models;
 
 namespace Progression.Interfaces
 {
     public interface IUserRepository
     {
-        Task<List<Models.Profile>> GetAllAsync();
-
-        Task<Models.Profile?> GetByIdAsync(int id);
-        Task<Models.Profile> CreateAsync(Profile profileModel);
-        Task<Models.Profile?> UpdatedAsync(int id, UpdateProfileRequestDto profileDto);
-        Task<Models.Profile?> DeleteAsync(int id);
-
-
+        Task<List<User>> GetAllAsync();
+        Task<User?> GetByIdAsync(int id);
+        Task<User> CreateAsync(User userModel);
+        Task<User?> UpdatedAsync(int id, UserDto userDto);
+        Task<User?> DeleteAsync(int id);
+        Task<User?> GetByEmailAsync(string email); // New method to retrieve user by email
     }
 }
